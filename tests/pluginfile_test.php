@@ -21,12 +21,13 @@ use mod_checkpoint\local\manager;
 /**
  * Tests for protected evidence file delivery.
  *
+ * @covers     ::checkpoint_pluginfile
  * @package    mod_checkpoint
  * @category   test
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class pluginfile_test extends \advanced_testcase {
+final class pluginfile_test extends \advanced_testcase {
     /**
      * A learner cannot access another learner's evidence by changing only the item id.
      *
