@@ -406,7 +406,8 @@ class manager {
             'maxbytes' => $maxbytes,
             'maxfiles' => 1,
             'accepted_types' => '*',
-            'return_types' => \FILE_INTERNAL,
+            // Moodle 5.x no longer guarantees FILE_INTERNAL is loaded in every bootstrap path.
+            'return_types' => 1,
         ];
     }
 
