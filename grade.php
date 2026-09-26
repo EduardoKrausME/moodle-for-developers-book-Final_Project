@@ -45,10 +45,16 @@ $PAGE->set_title(get_string('gradeverb', 'mod_checkpoint'));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
-$form = new \mod_checkpoint\form\grade_form(null, [
-    'checkpoint' => $checkpoint,
-    'context' => $context,
-]);
+$form = new \mod_checkpoint\form\grade_form(
+    new moodle_url('/mod/checkpoint/grade.php', [
+        'id' => $cm->id,
+        'submissionid' => $submission->id,
+    ]),
+    [
+        'checkpoint' => $checkpoint,
+        'context' => $context,
+    ],
+);
 $form->set_data((object)[
     'submissionid' => $submission->id,
     'grade' => $submission->grade,
