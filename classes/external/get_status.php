@@ -1,0 +1,66 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+
+namespace mod_checkpoint\external;
+
+use core_external\external_api;
+use core_external\external_function_parameters;
+use core_external\external_single_structure;
+use core_external\external_value;
+
+/**
+ * Return checkpoint counters for authorised graders.
+ *
+ * @package    mod_checkpoint
+ * @copyright  2026 Eduardo Kraus
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+final class get_status extends external_api {
+    /**
+     * Define parameters.
+     *
+     * @return external_function_parameters
+     */
+    public static function execute_parameters(): external_function_parameters {
+        return new external_function_parameters([
+            'cmid' => new external_value(PARAM_INT, 'Course module id'),
+        ]);
+    }
+
+    /**
+     * Return counters for one checkpoint.
+     *
+     * @param int $cmid Course module id.
+     * @return array
+     */
+    public static function execute(int $cmid): array {
+        $params = self::validate_parameters(self::execute_parameters(), ['cmid' => $cmid]);
+        $cm = get_coursemodule_from_id('checkpoint', $params['cmid'], 0, false, MUST_EXIST);
+        $context = \context_module::instance($cm->id);
+        self::validate_context($context);
+        require_capability('mod/checkpoint:grade', $context);
+
+        return \core\di::get(\mod_checkpoint\local\manager::class)->get_summary($cm->instance);
+    }
+
+    /**
+     * Define the response structure.
+     *
+     * @return external_single_structure
+     */
+    public static function execute_returns(): external_single_structure {
+        return new external_single_structure([
+            'submitted' => new external_value(PARAM_INT, 'Submitted and awaiting grading'),
+            'graded' => new external_value(PARAM_INT, 'Graded submissions'),
+            'reopened' => new external_value(PARAM_INT, 'Reopened submissions'),
+            'draft' => new external_value(PARAM_INT, 'Draft submissions'),
+            'total' => new external_value(PARAM_INT, 'Total submissions'),
+            'late' => new external_value(PARAM_INT, 'Submissions last changed after the due date'),
+        ]);
+    }
+}
