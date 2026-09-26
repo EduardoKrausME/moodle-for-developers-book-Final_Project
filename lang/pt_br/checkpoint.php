@@ -54,6 +54,7 @@ $string['gradefor'] = 'Avaliar envio de {$a}';
 $string['graderange'] = 'Faixa válida: 0 a {$a}';
 $string['gradesaved'] = 'Nota e feedback salvos.';
 $string['gradeverb'] = 'Avaliar';
+$string['lastmodified'] = 'Última alteração';
 $string['late'] = 'Atrasado';
 $string['maxbytes'] = 'Tamanho máximo do arquivo de evidência';
 $string['maxbytes_desc'] = 'Limite global para um arquivo de evidência do checkpoint. Os limites do curso e do site continuam sendo aplicados.';
