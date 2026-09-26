@@ -27,6 +27,7 @@ defined('MOODLE_INTERNAL') || die();
 $functions = [
     'mod_checkpoint_get_status' => [
         'classname' => 'mod_checkpoint\\external\\get_status',
+        'methodname' => 'execute',
         'description' => 'Return submission counters for a checkpoint.',
         'type' => 'read',
         'ajax' => true,
@@ -34,6 +35,7 @@ $functions = [
     ],
     'mod_checkpoint_get_own_status' => [
         'classname' => 'mod_checkpoint\\external\\get_own_status',
+        'methodname' => 'execute',
         'description' => 'Return the current user submission state for a checkpoint.',
         'type' => 'read',
         'capabilities' => 'mod/checkpoint:submit',
