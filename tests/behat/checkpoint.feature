@@ -35,7 +35,7 @@ Feature: Submit and grade checkpoint evidence
     And I am on "Checkpoint course" course homepage
     And I follow "Project checkpoint"
     And I press "View submissions"
-    And I follow "Grade"
+    And I click on "Grade" "link" in the "Student One" "table_row"
     And I set the field "Grade" to "92"
     And I set the field "Feedback" to "Good checkpoint"
     And I press "Save grade"
