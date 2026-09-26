@@ -35,7 +35,7 @@ if ($completion->is_enabled($cm) && has_capability('mod/checkpoint:submit', $con
     $completion->set_module_viewed($cm);
 }
 
-$manager = coredi::get(mod_checkpointlocalmanager::class);
+$manager = \core\di::get(\mod_checkpoint\local\manager::class);
 
 $submission = null;
 if (has_capability('mod/checkpoint:submit', $context)) {
@@ -69,11 +69,11 @@ if ($submission) {
 }
 
 $canedit = has_capability('mod/checkpoint:submit', $context)
-    && (!$submission || $submission->status !== mod_checkpointlocalsubmission_status::GRADED);
+    && (!$submission || $submission->status !== \mod_checkpoint\local\submission_status::GRADED);
 
 $statusoutput = null;
 if (has_capability('mod/checkpoint:submit', $context)) {
-    $statusoutput = new mod_checkpointoutputstudent_status(
+    $statusoutput = new \mod_checkpoint\output\student_status(
         checkpoint: $checkpoint,
         submission: $submission,
         canedit: $canedit,
@@ -99,8 +99,7 @@ if (trim((string)$checkpoint->intro) !== '') {
 if (!empty($checkpoint->duedate)) {
     echo $OUTPUT->notification(
         get_string('duedatevalue', 'mod_checkpoint', userdate($checkpoint->duedate)),
-        coreoutput
-otification::NOTIFY_INFO,
+        \core\output\notification::NOTIFY_INFO,
     );
 }
 

@@ -29,7 +29,7 @@ $context = context_module::instance($cm->id);
 require_login($course, true, $cm);
 require_capability('mod/checkpoint:grade', $context);
 
-if ($status !== '' && !in_array($status, mod_checkpointlocalsubmission_status::all(), true)) {
+if ($status !== '' && !in_array($status, \mod_checkpoint\local\submission_status::all(), true)) {
     throw new moodle_exception('invalidparameter');
 }
 
@@ -64,13 +64,13 @@ $sql = "SELECT s.*, u.firstname, u.lastname, u.firstnamephonetic, u.lastnamephon
 $records = $DB->get_records_sql($sql, $params, $page * $perpage, $perpage);
 
 $PAGE->requires->js_call_amd('mod_checkpoint/dashboard', 'init', [$cm->id]);
-$summary = coredi::get(mod_checkpointlocalmanager::class)->get_summary($checkpoint->id);
+$summary = \core\di::get(\mod_checkpoint\local\manager::class)->get_summary($checkpoint->id);
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('submissions', 'mod_checkpoint'));
 
 $filteroptions = ['' => get_string('all')];
-foreach (mod_checkpointlocalsubmission_status::all() as $state) {
+foreach (\mod_checkpoint\local\submission_status::all() as $state) {
     $filteroptions[$state] = get_string('status:' . $state, 'mod_checkpoint');
 }
 $select = new single_select(
@@ -110,7 +110,7 @@ foreach ($records as $record) {
         get_string('gradeverb', 'mod_checkpoint'),
         ['class' => 'btn btn-sm btn-primary'],
     );
-    if ($record->status === mod_checkpointlocalsubmission_status::GRADED) {
+    if ($record->status === \mod_checkpoint\local\submission_status::GRADED) {
         $actions[] = $OUTPUT->single_button(
             new moodle_url('/mod/checkpoint/reopen.php', ['id' => $cm->id, 'submissionid' => $record->id]),
             get_string('reopen', 'mod_checkpoint'),

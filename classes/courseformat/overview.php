@@ -6,13 +6,13 @@
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-namespace mod_checkpointcourseformat;
+namespace mod_checkpoint\courseformat;
 
 use cm_info;
-use core_calendaroutputhumandate;
-use core_courseformatactivityoverviewbase;
-use core_courseformatlocaloverviewoverviewitem;
-use mod_checkpointlocalsubmission_status;
+use core_calendar\output\humandate;
+use core_courseformat\activityoverviewbase;
+use core_courseformat\local\overview\overviewitem;
+use mod_checkpoint\local\submission_status;
 
 /**
  * Moodle activity overview integration for mod_checkpoint.
@@ -26,13 +26,13 @@ final class overview extends activityoverviewbase {
      * Create the overview integration with explicit dependencies.
      *
      * @param cm_info $cm Course module information.
-     * @param moodle_database $db Moodle database connection.
-     * @param coreclock $clock Moodle clock service.
+     * @param \moodle_database $db Moodle database connection.
+     * @param \core\clock $clock Moodle clock service.
      */
     public function __construct(
         cm_info $cm,
-        private readonly moodle_database $db,
-        private readonly coreclock $clock,
+        private readonly \moodle_database $db,
+        private readonly \core\clock $clock,
     ) {
         parent::__construct($cm);
     }
@@ -42,7 +42,7 @@ final class overview extends activityoverviewbase {
      *
      * @return overviewitem|null
      */
-    #[Override]
+    #[\Override]
     public function get_due_date_overview(): ?overviewitem {
         $checkpoint = $this->db->get_record(
             'checkpoint',
@@ -63,7 +63,7 @@ final class overview extends activityoverviewbase {
      *
      * @return array
      */
-    #[Override]
+    #[\Override]
     public function get_extra_overview_items(): array {
         global $USER;
 

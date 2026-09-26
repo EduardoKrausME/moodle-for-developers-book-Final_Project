@@ -37,7 +37,7 @@ $PAGE->set_title(get_string('gradeverb', 'mod_checkpoint'));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
 
-$form = new mod_checkpointormgrade_form(null, [
+$form = new \mod_checkpoint\form\grade_form(null, [
     'checkpoint' => $checkpoint,
     'context' => $context,
 ]);
@@ -54,7 +54,7 @@ if ($form->is_cancelled()) {
     redirect(new moodle_url('/mod/checkpoint/submissions.php', ['id' => $cm->id]));
 }
 if ($data = $form->get_data()) {
-    coredi::get(mod_checkpointlocalmanager::class)->grade(
+    \core\di::get(\mod_checkpoint\local\manager::class)->grade(
         $submission->id,
         $USER->id,
         (float)$data->grade,
@@ -65,8 +65,7 @@ if ($data = $form->get_data()) {
         new moodle_url('/mod/checkpoint/submissions.php', ['id' => $cm->id]),
         get_string('gradesaved', 'mod_checkpoint'),
         null,
-        coreoutput
-otification::NOTIFY_SUCCESS,
+        \core\output\notification::NOTIFY_SUCCESS,
     );
 }
 
