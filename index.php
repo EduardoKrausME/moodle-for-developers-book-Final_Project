@@ -25,4 +25,7 @@
 require_once(__DIR__ . '/../../config.php');
 
 $courseid = required_param('id', PARAM_INT);
+$course = get_course($courseid);
+require_login($course);
+
 \core_courseformat\activityoverviewbase::redirect_to_overview_page($courseid, 'checkpoint');
