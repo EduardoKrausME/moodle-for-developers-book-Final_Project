@@ -205,7 +205,7 @@ class provider implements
         get_file_storage()->delete_area_files($context->id, 'mod_checkpoint', 'evidence');
         $DB->delete_records('checkpoint_submission', ['checkpointid' => $cm->instance]);
         self::refresh_completion($cm, $affecteduserids);
-        \cache::make('mod_checkpoint', 'summary')->delete('checkpoint:' . $cm->instance);
+        self::delete_summary_cache($cm->instance);
     }
 
     /**
@@ -286,7 +286,17 @@ class provider implements
             $params,
         );
         self::refresh_completion($cm, $affecteduserids);
-        \cache::make('mod_checkpoint', 'summary')->delete('checkpoint:' . $cm->instance);
+        self::delete_summary_cache($cm->instance);
+    }
+
+    /**
+     * Delete the cached status summary for one checkpoint.
+     *
+     * @param int $checkpointid Checkpoint id.
+     * @return void
+     */
+    private static function delete_summary_cache(int $checkpointid): void {
+        \cache::make('mod_checkpoint', 'summary')->delete('checkpoint_' . $checkpointid);
     }
 
     /**
