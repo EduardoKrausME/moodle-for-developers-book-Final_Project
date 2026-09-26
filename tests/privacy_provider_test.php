@@ -14,22 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-namespace mod_checkpoint\privacy;
+namespace mod_checkpoint;
 
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\approved_contextlist;
 use core_privacy\local\request\writer;
 use mod_checkpoint\local\manager;
+use mod_checkpoint\privacy\provider;
 
 /**
  * Privacy provider tests.
  *
+ * @covers     \mod_checkpoint\privacy\provider
  * @package    mod_checkpoint
  * @category   test
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class privacy_provider_test extends \core_privacy\tests\provider_testcase {
+final class privacy_provider_test extends \core_privacy\tests\provider_testcase {
     /**
      * Metadata describes the submission table and the Files API link.
      *
