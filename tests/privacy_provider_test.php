@@ -73,7 +73,7 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $completion = new \completion_info($course);
         $this->assertSame(
             COMPLETION_COMPLETE,
-            (int)$completion->get_data($cminfo, false, $student->id)->completion,
+            (int)$completion->get_data($cminfo, false, $student->id)->completionstate,
         );
 
         $contextlist = provider::get_contexts_for_userid($student->id);
@@ -92,7 +92,7 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $completion = new \completion_info($course);
         $this->assertSame(
             COMPLETION_INCOMPLETE,
-            (int)$completion->get_data($cminfo, false, $student->id)->completion,
+            (int)$completion->get_data($cminfo, false, $student->id)->completionstate,
         );
     }
 }
