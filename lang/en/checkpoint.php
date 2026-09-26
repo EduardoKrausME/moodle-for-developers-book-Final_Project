@@ -24,6 +24,7 @@
 
 $string['allowfile'] = 'Allow one evidence file';
 $string['allowtext'] = 'Allow text evidence';
+$string['cachedef_summary'] = 'Checkpoint submission summary counters';
 $string['checkpoint:addinstance'] = 'Add a new checkpoint';
 $string['checkpoint:grade'] = 'Grade checkpoint submissions';
 $string['checkpoint:manage'] = 'Manage checkpoint submissions';
@@ -86,6 +87,7 @@ $string['privacy:path:submission'] = 'Submission';
 $string['reopen'] = 'Reopen';
 $string['savegrade'] = 'Save grade';
 $string['savesubmission'] = 'Save submission';
+$string['status'] = 'Status';
 $string['status:draft'] = 'Draft';
 $string['status:graded'] = 'Graded';
 $string['status:none'] = 'Not submitted';
