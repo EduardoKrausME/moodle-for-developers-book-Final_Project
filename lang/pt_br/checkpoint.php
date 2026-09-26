@@ -24,6 +24,7 @@
 
 $string['allowfile'] = 'Permitir um arquivo de evidência';
 $string['allowtext'] = 'Permitir evidência em texto';
+$string['cachedef_summary'] = 'Contadores resumidos dos envios do checkpoint';
 $string['checkpoint:addinstance'] = 'Adicionar um novo checkpoint';
 $string['checkpoint:grade'] = 'Avaliar envios do checkpoint';
 $string['checkpoint:manage'] = 'Gerenciar envios do checkpoint';
@@ -86,6 +87,7 @@ $string['privacy:path:submission'] = 'Envio';
 $string['reopen'] = 'Reabrir';
 $string['savegrade'] = 'Salvar avaliação';
 $string['savesubmission'] = 'Salvar envio';
+$string['status'] = 'Status';
 $string['status:draft'] = 'Rascunho';
 $string['status:graded'] = 'Avaliado';
 $string['status:none'] = 'Não enviado';
