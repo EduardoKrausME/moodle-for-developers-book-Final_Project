@@ -95,7 +95,7 @@ $table = new html_table();
 $table->head = [
     get_string('student', 'mod_checkpoint'),
     get_string('status', 'mod_checkpoint'),
-    get_string('timemodified'),
+    get_string('lastmodified', 'mod_checkpoint'),
     get_string('late', 'mod_checkpoint'),
     get_string('grade', 'mod_checkpoint'),
     get_string('actions'),
