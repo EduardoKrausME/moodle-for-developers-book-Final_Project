@@ -189,11 +189,14 @@ final class provider implements
         }
         $checkpoint = $DB->get_record('checkpoint', ['id' => $cm->instance], '*', MUST_EXIST);
         $submissions = $DB->get_records('checkpoint_submission', ['checkpointid' => $cm->instance], '', 'id, userid');
+        $affecteduserids = [];
         foreach ($submissions as $submission) {
+            $affecteduserids[] = (int)$submission->userid;
             checkpoint_grade_item_update($checkpoint, ['userid' => $submission->userid, 'rawgrade' => null]);
         }
         get_file_storage()->delete_area_files($context->id, 'mod_checkpoint', 'evidence');
         $DB->delete_records('checkpoint_submission', ['checkpointid' => $cm->instance]);
+        self::refresh_completion($cm, $affecteduserids);
         \cache::make('mod_checkpoint', 'summary')->delete('checkpoint:' . $cm->instance);
     }
 
@@ -251,7 +254,9 @@ final class provider implements
             '',
             'id, userid',
         );
+        $affecteduserids = [];
         foreach ($submissions as $submission) {
+            $affecteduserids[] = (int)$submission->userid;
             get_file_storage()->delete_area_files(
                 $context->id,
                 'mod_checkpoint',
@@ -272,6 +277,31 @@ final class provider implements
             "checkpointid = :checkpointid AND graderid {$insql}",
             $params,
         );
+        self::refresh_completion($cm, $affecteduserids);
         \cache::make('mod_checkpoint', 'summary')->delete('checkpoint:' . $cm->instance);
+    }
+
+    /**
+     * Recalculate completion after privacy deletion changes the source domain data.
+     *
+     * @param \stdClass $cm Course module record.
+     * @param int[] $userids Users whose owned submissions were deleted.
+     * @return void
+     */
+    private static function refresh_completion(\stdClass $cm, array $userids): void {
+        if (empty($userids)) {
+            return;
+        }
+
+        $course = get_course($cm->course);
+        $completion = new \completion_info($course);
+        $cminfo = get_fast_modinfo($course)->get_cm($cm->id);
+        if (!$completion->is_enabled($cminfo)) {
+            return;
+        }
+
+        foreach (array_unique($userids) as $userid) {
+            $completion->update_state($cminfo, COMPLETION_UNKNOWN, (int)$userid);
+        }
     }
 }

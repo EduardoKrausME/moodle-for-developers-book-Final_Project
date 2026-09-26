@@ -10,6 +10,6 @@
 - Submission and grading events.
 - Cached teacher status endpoint and learner self-status Web Service.
 - Asynchronous grade notification with retry protection.
-- Privacy API export and deletion support.
+- Privacy API export and deletion support, including Gradebook and Completion recalculation.
 - Moodle 2 backup/restore API support, including evidence files and user mappings.
-- PHPUnit, Behat, and CI coverage.
+- PHPUnit, Behat, and CI coverage, including evidence-file IDOR regression coverage and Moodle 5.0 through 5.2.

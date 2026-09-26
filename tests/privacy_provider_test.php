@@ -43,10 +43,12 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $this->resetAfterTest();
 
         $generator = $this->getDataGenerator();
-        $course = $generator->create_course();
+        $course = $generator->create_course(['enablecompletion' => 1]);
         $student = $generator->create_and_enrol($course, 'student');
         $checkpoint = $generator->get_plugin_generator('mod_checkpoint')->create_instance([
             'course' => $course->id,
+            'completion' => COMPLETION_TRACKING_AUTOMATIC,
+            'completionsubmit' => 1,
         ]);
         $cm = get_coursemodule_from_instance('checkpoint', $checkpoint->id, $course->id, false, MUST_EXIST);
         $context = \context_module::instance($cm->id);
@@ -55,6 +57,14 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $submissionid = \core\di::get(manager::class)->submit($checkpoint->id, $student->id, [
             'submissiontext' => ['text' => 'Private evidence', 'format' => FORMAT_HTML],
         ]);
+
+        get_fast_modinfo($course, 0, true);
+        $cminfo = get_fast_modinfo($course)->get_cm($cm->id);
+        $completion = new \completion_info($course);
+        $this->assertSame(
+            COMPLETION_COMPLETE,
+            (int)$completion->get_data($cminfo, false, $student->id)->completion,
+        );
 
         $contextlist = provider::get_contexts_for_userid($student->id);
         $this->assertCount(1, $contextlist);
@@ -66,5 +76,13 @@ final class privacy_provider_test extends \core_privacy\tests\provider_testcase 
         $approved = new approved_contextlist($student, 'mod_checkpoint', [$context->id]);
         provider::delete_data_for_user($approved);
         $this->assertFalse($DB->record_exists('checkpoint_submission', ['id' => $submissionid]));
+
+        get_fast_modinfo($course, 0, true);
+        $cminfo = get_fast_modinfo($course)->get_cm($cm->id);
+        $completion = new \completion_info($course);
+        $this->assertSame(
+            COMPLETION_INCOMPLETE,
+            (int)$completion->get_data($cminfo, false, $student->id)->completion,
+        );
     }
 }

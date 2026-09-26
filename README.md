@@ -94,9 +94,9 @@ Activity configuration is always backed up. Submissions are included only when u
 
 ## Tests
 
-The repository includes PHPUnit coverage for submission flow, negative capability checks, events, Gradebook, completion, Privacy API, and notification task idempotence, plus Behat coverage for the learner/teacher workflow and a learner UI permission check.
+The repository includes PHPUnit coverage for submission flow, negative capability checks, evidence-file IDOR protection, events, Gradebook, completion, Privacy API deletion effects, and notification task idempotence, plus Behat coverage for the learner/teacher workflow and a learner UI permission check.
 
-The existing GitHub Actions workflow runs the plugin against Moodle 5.1 and 5.2 using PostgreSQL and MariaDB, with PHP lint, Moodle Code Checker, Plugin Validate, savepoint validation, PHPUnit, and Behat.
+The existing GitHub Actions workflow covers Moodle 5.0, 5.1, and 5.2 with compatible PHP versions across PostgreSQL and MariaDB, with PHP lint, Moodle Code Checker, Plugin Validate, savepoint validation, PHPUnit, and Behat.
 
 ## Release checklist
 
