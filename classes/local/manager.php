@@ -32,15 +32,28 @@ use moodle_exception;
  */
 class manager {
     /**
+     * Moodle database connection.
+     *
+     * @var \moodle_database
+     */
+    private readonly \moodle_database $db;
+
+    /**
+     * Moodle clock service.
+     *
+     * @var \core\clock
+     */
+    private readonly \core\clock $clock;
+
+    /**
      * Create the service.
      *
      * @param \moodle_database $db Moodle database connection.
      * @param \core\clock $clock Moodle clock service.
      */
-    public function __construct(
-        private readonly \moodle_database $db,
-        private readonly \core\clock $clock,
-    ) {
+    public function __construct(\moodle_database $db, \core\clock $clock) {
+        $this->db = $db;
+        $this->clock = $clock;
     }
 
     /**
@@ -335,7 +348,7 @@ class manager {
      */
     public function get_summary(int $checkpointid): array {
         $cache = cache::make('mod_checkpoint', 'summary');
-        $key = 'checkpoint:' . $checkpointid;
+        $key = 'checkpoint_' . $checkpointid;
         $cached = $cache->get($key);
         if ($cached !== false) {
             return $cached;
@@ -393,7 +406,7 @@ class manager {
             'maxbytes' => $maxbytes,
             'maxfiles' => 1,
             'accepted_types' => '*',
-            'return_types' => FILE_INTERNAL,
+            'return_types' => \FILE_INTERNAL,
         ];
     }
 
@@ -415,7 +428,7 @@ class manager {
      * @return void
      */
     public function invalidate_summary(int $checkpointid): void {
-        cache::make('mod_checkpoint', 'summary')->delete('checkpoint:' . $checkpointid);
+        cache::make('mod_checkpoint', 'summary')->delete('checkpoint_' . $checkpointid);
     }
 
     /**
