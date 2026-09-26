@@ -34,7 +34,8 @@ $context = context_module::instance($cm->id);
 require_login($course, true, $cm);
 require_capability('mod/checkpoint:submit', $context);
 
-$PAGE->set_url('/mod/checkpoint/submission.php', ['id' => $cm->id]);
+$submissionurl = new moodle_url('/mod/checkpoint/submission.php', ['id' => $cm->id]);
+$PAGE->set_url($submissionurl);
 $PAGE->set_title(get_string('editsubmission', 'mod_checkpoint'));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($context);
@@ -46,7 +47,7 @@ if ($submission && $submission->status === \mod_checkpoint\local\submission_stat
 }
 
 $fileoptions = \mod_checkpoint\local\manager::get_file_options($course->id);
-$form = new \mod_checkpoint\form\submission_form(null, [
+$form = new \mod_checkpoint\form\submission_form($submissionurl, [
     'checkpoint' => $checkpoint,
     'context' => $context,
     'fileoptions' => $fileoptions,
