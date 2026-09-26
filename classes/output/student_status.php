@@ -29,6 +29,48 @@ use templatable;
  */
 class student_status implements renderable, templatable {
     /**
+     * Checkpoint record.
+     *
+     * @var \stdClass
+     */
+    private readonly \stdClass $checkpoint;
+
+    /**
+     * Current submission record.
+     *
+     * @var \stdClass|null
+     */
+    private readonly ?\stdClass $submission;
+
+    /**
+     * Whether the learner may edit the submission.
+     *
+     * @var bool
+     */
+    private readonly bool $canedit;
+
+    /**
+     * Submission form URL.
+     *
+     * @var string
+     */
+    private readonly string $editurl;
+
+    /**
+     * Whether the current submission is late.
+     *
+     * @var bool
+     */
+    private readonly bool $late;
+
+    /**
+     * Evidence file links.
+     *
+     * @var array
+     */
+    private readonly array $files;
+
+    /**
      * Create the view model.
      *
      * @param \stdClass $checkpoint Checkpoint record.
@@ -39,13 +81,19 @@ class student_status implements renderable, templatable {
      * @param array $files Evidence file links.
      */
     public function __construct(
-        private readonly \stdClass $checkpoint,
-        private readonly ?\stdClass $submission,
-        private readonly bool $canedit,
-        private readonly string $editurl,
-        private readonly bool $late = false,
-        private readonly array $files = [],
+        \stdClass $checkpoint,
+        ?\stdClass $submission,
+        bool $canedit,
+        string $editurl,
+        bool $late = false,
+        array $files = [],
     ) {
+        $this->checkpoint = $checkpoint;
+        $this->submission = $submission;
+        $this->canedit = $canedit;
+        $this->editurl = $editurl;
+        $this->late = $late;
+        $this->files = $files;
     }
 
     /**
