@@ -31,18 +31,30 @@ use mod_checkpoint\local\submission_status;
  */
 class overview extends activityoverviewbase {
     /**
+     * Moodle database connection.
+     *
+     * @var \moodle_database
+     */
+    private readonly \moodle_database $db;
+
+    /**
+     * Moodle clock service.
+     *
+     * @var \core\clock
+     */
+    private readonly \core\clock $clock;
+
+    /**
      * Create the overview integration with explicit dependencies.
      *
      * @param cm_info $cm Course module information.
      * @param \moodle_database $db Moodle database connection.
      * @param \core\clock $clock Moodle clock service.
      */
-    public function __construct(
-        cm_info $cm,
-        private readonly \moodle_database $db,
-        private readonly \core\clock $clock,
-    ) {
+    public function __construct(cm_info $cm, \moodle_database $db, \core\clock $clock) {
         parent::__construct($cm);
+        $this->db = $db;
+        $this->clock = $clock;
     }
 
     /**
