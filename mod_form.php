@@ -28,22 +28,27 @@ class mod_checkpoint_mod_form extends moodleform_mod {
     public function definition(): void {
         $mform = $this->_form;
 
+        // The instance name is the label shown in the course section and gradebook item.
         $mform->addElement('text', 'name', get_string('checkpointname', 'mod_checkpoint'), ['size' => 64]);
         $mform->setType('name', PARAM_TEXT);
         $mform->addRule('name', null, 'required', null, 'client');
 
+        // Moodle owns intro file handling through the standard activity intro elements.
         $this->standard_intro_elements();
 
+        // Due date is optional because some checkpoints are formative and not deadline based.
         $mform->addElement('date_time_selector', 'duedate', get_string('duedate', 'mod_checkpoint'), [
             'optional' => true,
         ]);
 
+        // At least one submission type must remain enabled; validation enforces the combination.
         $mform->addElement('advcheckbox', 'allowtext', get_string('allowtext', 'mod_checkpoint'));
         $mform->setDefault('allowtext', 1);
 
         $mform->addElement('advcheckbox', 'allowfile', get_string('allowfile', 'mod_checkpoint'));
         $mform->setDefault('allowfile', 1);
 
+        // Standard Moodle sections keep gradebook, availability and course module settings consistent.
         $this->standard_grading_coursemodule_elements();
         $this->standard_coursemodule_elements();
         $this->add_action_buttons();
@@ -52,19 +57,18 @@ class mod_checkpoint_mod_form extends moodleform_mod {
     /**
      * Add custom completion rules.
      *
+     * The field names must match the database columns and the custom_completion rule names.
+     * Moodle stores these values directly on the activity instance during add/update.
+     *
      * @return string[]
      */
     public function add_completion_rules(): array {
         $mform = $this->_form;
-        $suffix = $this->get_suffix();
 
-        $submitfield = 'completionsubmit' . $suffix;
-        $gradefield = 'completiongrade' . $suffix;
+        $mform->addElement('advcheckbox', 'completionsubmit', '', get_string('completiondetail:submit', 'mod_checkpoint'));
+        $mform->addElement('advcheckbox', 'completiongrade', '', get_string('completiondetail:grade', 'mod_checkpoint'));
 
-        $mform->addElement('advcheckbox', $submitfield, '', get_string('completiondetail:submit', 'mod_checkpoint'));
-        $mform->addElement('advcheckbox', $gradefield, '', get_string('completiondetail:grade', 'mod_checkpoint'));
-
-        return [$submitfield, $gradefield];
+        return ['completionsubmit', 'completiongrade'];
     }
 
     /**
@@ -74,8 +78,7 @@ class mod_checkpoint_mod_form extends moodleform_mod {
      * @return bool
      */
     public function completion_rule_enabled($data): bool {
-        $suffix = $this->get_suffix();
-        return !empty($data['completionsubmit' . $suffix]) || !empty($data['completiongrade' . $suffix]);
+        return !empty($data['completionsubmit']) || !empty($data['completiongrade']);
     }
 
     /**
