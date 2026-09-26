@@ -24,12 +24,13 @@ use mod_checkpoint\local\submission_status;
 /**
  * Tests for the checkpoint application service and Moodle projections.
  *
+ * @covers     \mod_checkpoint\local\manager
  * @package    mod_checkpoint
  * @category   test
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class manager_test extends \advanced_testcase {
+final class manager_test extends \advanced_testcase {
     /**
      * A learner can submit and the domain event contains the expected identifiers.
      *
@@ -37,7 +38,9 @@ class manager_test extends \advanced_testcase {
      */
     public function test_student_can_submit_and_event_is_triggered(): void {
         $this->resetAfterTest();
-        [$course, $student, $teacher, $checkpoint] = $this->create_fixture();
+        $fixture = $this->create_fixture();
+        $student = $fixture[1];
+        $checkpoint = $fixture[3];
         $this->setUser($student);
 
         $sink = $this->redirectEvents();
@@ -66,7 +69,9 @@ class manager_test extends \advanced_testcase {
      */
     public function test_user_without_grade_capability_cannot_grade(): void {
         $this->resetAfterTest();
-        [$course, $student, $teacher, $checkpoint] = $this->create_fixture();
+        $fixture = $this->create_fixture();
+        $student = $fixture[1];
+        $checkpoint = $fixture[3];
         $manager = \core\di::get(manager::class);
 
         $this->setUser($student);
