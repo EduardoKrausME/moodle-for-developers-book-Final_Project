@@ -59,7 +59,7 @@ final class manager_test extends \advanced_testcase {
         ));
         $this->assertCount(1, $events);
         $this->assertSame($id, (int)$events[0]->objectid);
-        $this->assertSame($student->id, (int)$events[0]->relateduserid);
+        $this->assertSame((int)$student->id, (int)$events[0]->relateduserid);
     }
 
     /**
