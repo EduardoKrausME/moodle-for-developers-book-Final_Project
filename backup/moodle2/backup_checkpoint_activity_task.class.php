@@ -27,6 +27,9 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/checkpoint/backup/moodle2/backup_checkpoint_stepslib.php');
 
+/**
+ * Class backup_checkpoint_activity_task
+ */
 class backup_checkpoint_activity_task extends backup_activity_task {
     /**
      * No plugin-specific backup settings are required.
