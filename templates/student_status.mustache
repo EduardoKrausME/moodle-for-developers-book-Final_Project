@@ -1,3 +1,49 @@
+{{!
+    This file is part of Moodle - https://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template mod_checkpoint/student_status
+
+    Example context (json):
+    {
+        "name": "Final project checkpoint",
+        "status": "Submitted",
+        "late": true,
+        "can_edit": true,
+        "editurl": "https://example.com/mod/checkpoint/submission.php?id=42",
+        "hastext": true,
+        "submissiontext": "<p>The first version of the project has been completed.</p>",
+        "hasfiles": true,
+        "files": [
+            {
+                "name": "project-report.pdf",
+                "url": "https://example.com/pluginfile.php/123/mod_checkpoint/evidence/456/project-report.pdf"
+            },
+            {
+                "name": "source-code.zip",
+                "url": "https://example.com/pluginfile.php/123/mod_checkpoint/evidence/456/source-code.zip"
+            }
+        ],
+        "graded": true,
+        "grade": "85.00",
+        "grademax": "100.00",
+        "hasfeedback": true,
+        "feedback": "<p>Good work. Review the documentation before the final submission.</p>"
+    }
+}}
 <div class="mod-checkpoint-status card mb-3">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start gap-3">
