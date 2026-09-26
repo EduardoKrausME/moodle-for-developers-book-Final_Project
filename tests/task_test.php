@@ -22,12 +22,13 @@ use mod_checkpoint\task\send_grade_notification;
 /**
  * Tests for asynchronous grade notifications.
  *
+ * @covers     \mod_checkpoint\task\send_grade_notification
  * @package    mod_checkpoint
  * @category   test
  * @copyright  2026 Eduardo Kraus
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class task_test extends \advanced_testcase {
+final class task_test extends \advanced_testcase {
     /**
      * Running the notification task twice sends one message.
      *
