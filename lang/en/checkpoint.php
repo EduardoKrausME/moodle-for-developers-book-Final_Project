@@ -54,6 +54,7 @@ $string['gradefor'] = 'Grade submission for {$a}';
 $string['graderange'] = 'Valid range: 0 to {$a}';
 $string['gradesaved'] = 'Grade and feedback saved.';
 $string['gradeverb'] = 'Grade';
+$string['lastmodified'] = 'Last modified';
 $string['late'] = 'Late';
 $string['maxbytes'] = 'Maximum evidence file size';
 $string['maxbytes_desc'] = 'Global upper limit for one checkpoint evidence file. Course and site upload limits still apply.';
