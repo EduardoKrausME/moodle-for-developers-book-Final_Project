@@ -26,7 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_checkpoint';
 $plugin->version = 2026092600;
-$plugin->requires = 2025041400;
-$plugin->supported = [500, 502];
+$plugin->requires = 2024100715;
 $plugin->maturity = MATURITY_STABLE;
 $plugin->release = '1.0.0';
